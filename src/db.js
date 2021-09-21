@@ -11,6 +11,14 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
     min: 0,
     acquire: 2147483647,
     idle: 10000
+  },
+  dialect: 'postgres',
+  protocol: 'postgres',
+  dialectOptions: {
+    ssl: {
+      required: true,
+      rejectUnauthorized: false
+    }
   }
 });
 
