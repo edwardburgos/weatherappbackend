@@ -4,7 +4,7 @@ const { City, Country, State } = require('./src/db.js');
 const fs = require('fs')
 
 conn.sync({ force: false }).then(async () => { 
-  server.listen(3001, () => {
+  server.listen(process.env.PORTY, () => {
     console.log('Server listening at 3001');
   });
 
