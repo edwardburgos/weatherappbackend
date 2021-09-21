@@ -4,10 +4,6 @@ const { City, Country, State } = require('./src/db.js');
 const fs = require('fs')
 
 conn.sync({ force: false }).then(async () => { 
-  server.listen(process.env.PORT, () => {
-    console.log(`Server listening at ${process.env.PORT}`);
-  });
-
   if (!(await Country.findAll()).length && !(await State.findAll()).length && !(await City.findAll()).length) { 
     try {
 
@@ -56,5 +52,8 @@ conn.sync({ force: false }).then(async () => {
   }
 
   console.log('Database created')
+});
 
+server.listen(process.env.PORT, () => {
+  console.log(`Server listening at ${process.env.PORT}`);
 });
