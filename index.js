@@ -13,12 +13,12 @@ conn.sync({ force: false }).then(async () => {
 
       // Insert states
       const states = JSON.parse(fs.readFileSync('./src/extras/countryStates.js', 'utf-8'))
-      states.forEach(firstE => {
+      states.forEach(async (firstE) => {
         try {
           const country = await Country.findOne({ where: { codeBig: firstE.iso3 } })
           if (country) {
             const countryId = country.id;
-            firstE.states.forEach(e => {
+            firstE.states.forEach(async (e) => {
               await State.create({ nameLower: e.name.toLowerCase(), nameNormal: e.name, code: e.state_code, countryId: countryId })
             })
           }
@@ -29,7 +29,7 @@ conn.sync({ force: false }).then(async () => {
 
       // Insert cities
       const cities = JSON.parse(fs.readFileSync('./src/extras/countryStateCities.js', 'utf-8'))
-      cities.forEach(e => {
+      cities.forEach(async (e) => {
         try {
           const country = await Country.findOne({ where: { code: e.country } })
           let state = ''
