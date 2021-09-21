@@ -20,7 +20,7 @@ router.get('/cities', async (req, res, next) => {
             res.send([...new Set(filterCities.map(e => JSON.stringify({ name: e.nameNormal, state: e.state ? { code: e.state.code, name: e.state.nameNormal } : null, country: { code: e.country.code, name: e.country.nameNormal } })))].map(e => JSON.parse(e)).slice(0, 10))
         } else { res(404).send(`There is no city called ${name}`); }
     } catch (e) {
-        next();
+        next(e);
     }
 })
 
@@ -30,7 +30,7 @@ router.get('/countries', async (req, res, next) => {
         const countries = await Country.findAll();
         res.send(countries.map(e => { return { name: e.nameNormal, code: e.code } }))
     } catch (e) {
-        next()
+        next(e)
     }
 });
 
@@ -46,7 +46,7 @@ router.get('/stateCountryName', async (req, res, next) => {
             res.send({ countryName: country.nameNormal, stateName: '' })
         }
     } catch (e) {
-        next()
+        next(e)
     }
 })
 
@@ -62,7 +62,7 @@ router.get('/stateCountryCode', async (req, res, next) => {
             res.send({ countryCode: country.code, stateCode: '' })
         }
     } catch (e) {
-        next()
+        next(e)
     }
 })
 
@@ -75,7 +75,7 @@ router.get('/cityHasState', async (req, res, next) => {
         const cityInfo = await City.findOne({where: {nameNormal: city, stateId: state.id, countryId: country.id }})
         return res.send(cityInfo ? state.code : '')
     } catch (e) {
-        next()
+        next(e)
     }
 })
 
@@ -111,7 +111,7 @@ router.get('/moreCountryInfo', async (req, res, next) => {
         }
         res.send(formattedInfo)
     } catch (e) {
-        next()
+        next(e)
     }
 })
 
