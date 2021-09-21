@@ -4,8 +4,8 @@ const { City, Country, State } = require('./src/db.js');
 const fs = require('fs')
 
 conn.sync({ force: false }).then(async () => { 
-  server.listen(process.env.PORTY, () => {
-    console.log('Server listening at 3001');
+  server.listen(process.env.PORT, () => {
+    console.log(`Server listening at ${process.env.PORT}`);
   });
 
   if (!(await Country.findAll()).length && !(await State.findAll()).length && !(await City.findAll()).length) { 
