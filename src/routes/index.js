@@ -79,42 +79,4 @@ router.get('/cityHasState', async (req, res, next) => {
     }
 })
 
-// // This route allows us to get additional info of a country
-// router.get('/moreCountryInfo', async (req, res, next) => {
-//     const {countryName} = req.query;
-//     try {
-//         const country = await Country.findOne({ where: {nameNormal: countryName}})
-//         const countryInfo = await axios.get(`https://api.countrylayer.com/v2/alpha/${country.code}?access_key=${process.env.API_KEY}`)  // From now on to get the complete 
-//                                                                                                                                         // information you have to pay
-//         let borders = []
-//         for (const e of countryInfo.data.borders) { 
-//             const borderCountry = await Country.findOne({where: {codeBig: e}})
-//             borders = [...borders, {name: borderCountry.nameNormal, code: borderCountry.code }]
-//         }
-//         let states = await State.findAll({where: {countryId: country.id}})
-//         const formattedInfo =  {
-//             name: countryName,
-//             states: states.length.toLocaleString(),
-//             topLevelDomain: countryInfo.data.topLevelDomain[0],
-//             isoCode2: country.code,
-//             isoCode3: country.codeBig,
-//             numericCode: countryInfo.data.numericCode,
-//             dialCode: countryInfo.data.callingCodes[0],
-//             capital: countryInfo.data.capital,
-//             region: countryInfo.data.region,
-//             subregion: countryInfo.data.subregion,
-//             population: countryInfo.data.population.toLocaleString(),
-//             demonym: countryInfo.data.demonym,
-//             borders, 
-//             currencies: countryInfo.data.currencies.map(e => `${e.symbol} - ${e.code} - ${e.name}`),
-//             languages: countryInfo.data.languages.map(e => e.name),
-//             regionalBlocs: countryInfo.data.regionalBlocs.map(e => `${e.acronym}  - ${e.name}`)
-//         }
-//         res.send(formattedInfo)
-//     } catch (e) {
-//         console.log(e)
-//         next()
-//     }
-// })
-
 module.exports = router;
