@@ -14,8 +14,14 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
   },
   dialect: 'postgres',
   protocol: 'postgres',
-  dialectOptions: process.env.DIALECTOPTIONS
-});
+  dialectOptions: process.env.NODE_ENV === 'development' ? null :
+    {
+      ssl: {
+        required: true,
+        rejectUnauthorized: false
+      }
+    }
+  });
 
 const basename = path.basename(__filename);
 
