@@ -39,8 +39,8 @@ conn.sync({ force: false }).then(async () => {
           let state = ''
           if (e.state) { state = await State.findOne({ where: { code: e.state, countryId: country.id } }) }
           await City.create({ nameLower: e.name.toLowerCase(), nameNormal: e.name, stateId: state ? state.id : null, countryId: country.id })
-        } catch (err) {
-          console.log(err)
+        } catch (e) {
+          console.log(e)
         }
       }
       
