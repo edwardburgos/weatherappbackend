@@ -72,8 +72,12 @@ router.get('/cityHasState', async (req, res, next) => {
     try {
         const country = await Country.findOne({ where: { code: countryCode } })
         const state = await State.findOne({ where: { nameLower: stateName.toLowerCase(), countryId: country.id } })
-        const cityInfo = await City.findOne({where: {nameNormal: city, stateId: state.id, countryId: country.id }})
-        return res.send(cityInfo ? state.code : '')
+        if (state) {
+            const cityInfo = await City.findOne({where: {nameNormal: city, stateId: state.id, countryId: country.id }})
+            return res.send({ stateCode: cityInfo ? state.code : '', countryName: country.name})
+        } else {
+            return res.send({ stateCode: '', countryName: country.name})
+        }
     } catch (e) {
         next()
     }
